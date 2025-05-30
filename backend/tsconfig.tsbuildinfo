@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/controller/auth.controller.ts","./src/db/connectdb.ts","./src/models/user.model.ts","./src/routes/auth.route.ts"],"version":"5.8.3"}
+{"root":["./src/index.ts","./src/controller/auth.controller.ts","./src/db/connectdb.ts","./src/models/user.model.ts","./src/routes/auth.route.ts","./src/types/express/index.d.ts","./src/utils/generatetoken.ts","./src/utils/getverificationcode.ts"],"version":"5.8.3"}

@@ -2,16 +2,18 @@ import { Request, Response } from "express";
 import { user } from "../models/user.model";
 import bcrypt from "bcrypt"
 import { getVerificationCode } from "../utils/getverificationcode";
-
+import { Token } from "../utils/generateToken";
+import mongoose, { ObjectId } from "mongoose";
 export const signup = async (req :Request,res :Response)=>{
     
     const {name,email,password}=req.body
-    const hashedPassword = await bcrypt.hash(password,5)
-    const verificationCode = getVerificationCode()
+    
     try{
 
         if(!name || !email || !password){
-            throw new Error("all fields are required !!")
+          res.status(400).send({
+            message:"all fields are required !"
+          })
         }
 
         const alreadyExist = await user.findOne({
@@ -22,6 +24,10 @@ export const signup = async (req :Request,res :Response)=>{
              res.status(400).json({success:false,message:"user already exist"})
         }
 
+        const hashedPassword = await bcrypt.hash(password,5)
+        const verificationCode = getVerificationCode()
+
+
         const User = new user({
             email,
             password:hashedPassword ,
@@ -31,6 +37,13 @@ export const signup = async (req :Request,res :Response)=>{
         })
 
         await User.save()
+        Token(res,User._id as mongoose.Types.ObjectId) ; 
+        res.send({
+            success:true , 
+            message:"user Created Succesfully" ,
+            user:{...User,
+            password:null}
+        }) 
     }catch(e){
          res.status(400).json({success:false,message:e})
     }   
