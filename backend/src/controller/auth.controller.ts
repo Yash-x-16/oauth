@@ -4,6 +4,7 @@ import bcrypt from "bcrypt"
 import { getVerificationCode } from "../utils/getverificationcode";
 import { Token } from "../utils/generateToken";
 import mongoose, { ObjectId } from "mongoose";
+import { getVerificationEmail } from "../mailtrap/emails";
 export const signup = async (req :Request,res :Response)=>{
     
     const {name,email,password}=req.body
@@ -25,7 +26,7 @@ export const signup = async (req :Request,res :Response)=>{
         }
 
         const hashedPassword = await bcrypt.hash(password,5)
-        const verificationCode = getVerificationCode()
+        const verificationCode = parseInt(getVerificationCode())
 
 
         const User = new user({
@@ -44,6 +45,7 @@ export const signup = async (req :Request,res :Response)=>{
             user:{...User,
             password:null}
         }) 
+       await getVerificationEmail(User.email,verificationCode)
     }catch(e){
          res.status(400).json({success:false,message:e})
     }   
