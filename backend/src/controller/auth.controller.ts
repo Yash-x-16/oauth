@@ -144,7 +144,7 @@ export const forgotPassword = async(req :Request,res :Response)=>{
             User.resetPasswordTokenExpiresAt = resetTokenExpiresAt
 
             await User.save() 
-           await getPasswordResetEmail(User.email,`${process.env.LINK}/forgotPassword/${resetToken}`)
+           await getPasswordResetEmail(User.email,`${process.env.LINK}/resetPassword/${resetToken}`)
            res.status(201).send({
             sucess :true ,
             message:"reset link is sent to the registered email"
@@ -168,4 +168,57 @@ res.send({
 })
 
 
+}
+
+export const resetPassword =async (req :Request,res :Response)=>{
+    try{
+        const {token} = req.params ;
+        const {password} = req.body ; 
+        const User = await user.findOne({
+            resetPasswordToken:token,
+            resetPasswordTokenExpiresAt:{$gt:Date.now()}
+        })
+
+        if(!User){
+            res.status(401).send({success:false,message:"user not found"})
+        }
+
+        if(User){
+            const hashedPassword = await bcrypt.hash(password,10)
+            User.password = hashedPassword ;
+            User.resetPasswordToken=undefined ;
+            User.resetPasswordTokenExpiresAt = undefined 
+            await User.save()
+            res.status(201).send({
+                sucess:true,
+                message:"password reset suceesful !!"
+            })
+        }
+    }catch(e){
+        res.send({
+            sucess :false , 
+            message:e
+        })
+    }
+} 
+
+export const checkAuth = async (req :Request,res :Response)=>{
+    try{
+        const User  = await user.findOne(req._id).select("-password")
+        
+        if (!User){res.status(401).json({
+            message:"user not found" 
+        })}
+
+        if(User){
+            res.status(201).json({
+                success:true , 
+                user : User
+            })
+        }
+    }catch(e){
+        res.status(402).json({
+            message :e
+        })
+    }
 }

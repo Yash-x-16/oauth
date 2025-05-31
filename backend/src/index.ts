@@ -1,14 +1,16 @@
 console.log("radhe radhe")
 import  express  from "express" 
+import dotenv from "dotenv"
+import cookieParser from "cookie-parser"
 import { connectDb } from "./db/connectDb"
 import authRoutes from "./routes/auth.route"
-import dotenv from "dotenv"
+
 
 
 const app = express()
 dotenv.config()
 app.use(express.json()) 
-
+app.use(cookieParser())
 const port = process.env.PORT
 
 
