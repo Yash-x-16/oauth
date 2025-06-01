@@ -4,12 +4,12 @@ import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
 import toast from 'react-hot-toast';
 import { BsChatDots } from "react-icons/bs";
-
+import { useAuthStore } from "../store/useAuthStore";
 
 export  function  Signup(){ 
-    interface UsernameResponse {
-        message: string;
-      } 
+
+    const {signup,isSigningup } = useAuthStore()
+
    
     const [visible,Setvisible] = useState(false)
     const userRef = useRef<HTMLInputElement>(null)
@@ -17,51 +17,34 @@ export  function  Signup(){
     const emailRef = useRef<HTMLInputElement>(null) 
     const [checkRef ,setcheck] = useState(false)
 
-//    const data  = {
-//         username : userRef.current?.value , 
-//         password : passwordRef.current?.value , 
-//         email : emailRef.current?.value , 
-//     } ;
+   const data  = {
+        name : userRef.current?.value , 
+        password : passwordRef.current?.value , 
+        email : emailRef.current?.value , 
+    } ;
   
   
-//     async function validate(){
-//         const password = passwordRef.current?.value 
-//         const email  = emailRef.current?.value 
-//         const username = userRef.current?.value 
+ function validate(){
+        const password = passwordRef.current?.value 
+        const email  = emailRef.current?.value 
+        const username = userRef.current?.value 
     
-//         if (!username) return toast.error("Username can't be empty",{duration:2000}) ;
-//         if (!password) return toast.error("Password can't be empty",{duration:2000});
-//         if (password.length < 6) return toast.error("Password must be at least 6 characters",{duration:2000});
-//         if (!email?.includes('@')) return toast.error("Invalid email",{duration:2000});
-//         if(checkRef==false){return toast.error("agree terms and consition to continue")}
-//             // try {
-//             // const resp = await axiosInstance.post<UsernameResponse>('/username', {
-//             //     username,
-//             //     email
-//             // });
+        if (!username) return toast.error("Username can't be empty",{duration:2000}) ;
+        if (!password) return toast.error("Password can't be empty",{duration:2000});
+        if (password.length < 6) return toast.error("Password must be at least 6 characters",{duration:2000});
+        if (!email?.includes('@')) return toast.error("Invalid email",{duration:2000});
+        if(checkRef==false){return toast.error("agree terms and consition to continue")}
+        return true
+                      }
 
-//             // if (resp.data.message === "user already exists") {
-//             //     return toast.error("User already exists");
-// //   }
-// // } catch (error) {
-// //   toast.error("username/email already exist !!",{duration:2000});
-// //   console.error(error);
-// //   return false;
-// // }
+  async function submit (){
+   const success =  validate()
 
-// // return true; 
-//     }
-  
-  
-// async function submit(){
-        
-//         const success = await validate()
-        
-//         if(success===true){
-//              await signup(data)
-//         }
-//     }
-
+        if(success===true){
+                await signup(data)
+        } ; 
+    
+  } ; 
 
 
     return <div className=" flex items-center justify-center bg-gray-100 h-screen w-screen flex-col">
@@ -149,9 +132,9 @@ export  function  Signup(){
 
                     <div className="m-2 flex justify-center items-center">
                     <button className="btn btn-wide btn-primary mb-4"
-                        // onClick={submit}
+                        onClick={submit}
                     >
-                       
+                       {isSigningup?"nothing":"Create Account"}
         
                     <IoIosArrowRoundForward size={"30px"}/>
                     </button>

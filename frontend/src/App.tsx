@@ -6,7 +6,7 @@ import { useAuthStore } from './store/useAuthStore'
 import { useEffect } from 'react'
 import {Loader} from "lucide-react"
 import { ProfilePage } from './pages/profilePage'
-
+import { Toaster } from 'react-hot-toast'
 function App() {
   const {authUser,checkAuth,isCheckingAuth} = useAuthStore()
 
@@ -14,9 +14,9 @@ function App() {
   checkAuth()
   },[checkAuth])
   
-  console.log(authUser)
+  // console.log(authUser)
 
-  if(!authUser && isCheckingAuth){
+  if(authUser && isCheckingAuth){
     return (
       <div className='flex items-center justify-center h-screen bg-white'>
         <Loader className="size-10 animate-spin text-indigo-600 "/>
@@ -26,11 +26,11 @@ function App() {
   
   return <BrowserRouter>
                   <Routes>
-                    <Route element={<Signup/>} path='/signup'/>
+                    <Route element={authUser?<ProfilePage/>:<Signup/>} path='/signup'/>
                     <Route element={<LoginPage/>} path='/signin'/>
                     <Route element={authUser?<ProfilePage/>:<Navigate to={'/signin'}/>} path='/profile'/>
                   </Routes>
-
+                  <Toaster/>
         </BrowserRouter>
   
 
