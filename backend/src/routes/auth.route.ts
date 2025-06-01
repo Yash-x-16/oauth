@@ -7,7 +7,9 @@ import {
       signin,
       signout,
       signup,
-      verifyEmail } from "../controller/auth.controller"
+      updateProfile,
+      verifyEmail
+     } from "../controller/auth.controller"
 
 import { verifyToken } from "../middleware/verifytoken"
 
@@ -15,6 +17,7 @@ const router  = express.Router()
 dotenv.config()
 
 router.get('/checkAuth',verifyToken,checkAuth)
+
 
 router.post('/signup',signup)
 
@@ -28,4 +31,7 @@ router.post('/verifyEmail',verifyEmail)
 
 router.post('/forgotPassword',forgotPassword)
 router.post('/resetPassword:token',resetPassword)
+
+router.post('/updateProfile',verifyToken,updateProfile)
+
 export default router

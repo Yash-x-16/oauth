@@ -6,6 +6,8 @@ import { Token } from "../utils/generateToken";
 import mongoose, { ObjectId } from "mongoose";
 import { getVerificationEmail ,getPasswordResetEmail} from "../mailtrap/emails";
 import { user } from "../models/user.model";
+import cloudinary from "../utils/cludinary.config";
+
 
 export const signup = async (req :Request,res :Response)=>{
     
@@ -159,6 +161,7 @@ export const forgotPassword = async(req :Request,res :Response)=>{
     }
 }
 
+
 export const signout = async (req :Request,res :Response)=>{
 
 
@@ -169,6 +172,7 @@ res.send({
 
 
 }
+
 
 export const resetPassword =async (req :Request,res :Response)=>{
     try{
@@ -202,6 +206,7 @@ export const resetPassword =async (req :Request,res :Response)=>{
     }
 } 
 
+
 export const checkAuth = async (req :Request,res :Response)=>{
     try{
         const User  = await user.findOne(req._id).select("-password")
@@ -222,3 +227,28 @@ export const checkAuth = async (req :Request,res :Response)=>{
         })
     }
 }
+
+export const updateProfile = async (req :Request,res :Response)=>{
+     
+    try{
+    
+        const {profileImage} = req.body
+        if(!profileImage){
+           res.status(401).json({
+                message:"unable to upload the image "
+            })
+        }
+        const userId = req._id
+
+        const response= await cloudinary.uploader.upload(profileImage)
+        const updatedUser = await user.findByIdAndUpdate(userId,{profileImage:response.secure_url},{new:true})
+        res.status(200).json(updatedUser)
+
+        }catch{
+            res.status(401).json({
+                message:"unable to upload the image "
+            })
+               }
+}
+
+

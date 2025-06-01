@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import { connectDb } from "./db/connectDb"
 import authRoutes from "./routes/auth.route"
+import messageRoute from "./routes/message.route"
 
 
 
@@ -15,6 +16,7 @@ const port = process.env.PORT
 
 
 app.use('/api/auth',authRoutes)
+app.use('/api/message',messageRoute)
 
 
 app.listen(port,()=>{
