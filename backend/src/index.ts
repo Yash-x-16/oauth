@@ -1,6 +1,7 @@
 console.log("radhe radhe")
 import  express  from "express" 
 import dotenv from "dotenv"
+import cors from "cors"
 import cookieParser from "cookie-parser"
 import { connectDb } from "./db/connectDb"
 import authRoutes from "./routes/auth.route"
@@ -8,7 +9,11 @@ import messageRoute from "./routes/message.route"
 
 
 
-const app = express()
+const app = express() 
+app.use(cors({
+    origin:"http://www.localhost:5173", 
+    credentials:true
+}))
 dotenv.config()
 app.use(express.json()) 
 app.use(cookieParser())
