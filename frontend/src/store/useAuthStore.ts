@@ -3,11 +3,13 @@ import { axiosInstance } from "../lib/store"
 import toast from "react-hot-toast";
 interface AuthStore {
     authUser: any; 
+    isVerified :any ;
     isCheckingAuth: boolean;
     isSigningup: boolean;
     isLogininup: boolean;
     checkAuth: () => Promise<void>;
     signup: (data: object) => Promise<void>;
+    Verify:(code:string)=>Promise<void> ;
   }
   
 
@@ -42,6 +44,22 @@ export const useAuthStore = create<AuthStore>((set)=>({
             toast.error("error in signup")
         }finally{
             set({isSigningup:false})
+        }
+    },
+
+    isVerified :null ,
+
+    Verify : async(code:string)=>{
+        try {
+        const code1 = JSON.parse(code)
+            set({isSigningup:true})
+            const response = await axiosInstance.post('/auth/verifyEmail',code1)
+            set({authUser:response.data,isVerified:true})
+            console.log(response)
+            toast.success("account verified succesfully !!",{duration:1500})
+        } catch (error) {
+            console.log("error in verify is ; ",error)
+            toast.error("invalid or expired code !!",{duration:1500})
         }
     }
 }))

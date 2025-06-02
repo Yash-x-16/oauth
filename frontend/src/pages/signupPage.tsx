@@ -5,11 +5,11 @@ import { IoMdEyeOff } from "react-icons/io";
 import toast from 'react-hot-toast';
 import { BsChatDots } from "react-icons/bs";
 import { useAuthStore } from "../store/useAuthStore";
-
+import { Link, Navigate, useNavigate } from "react-router-dom";
 export  function  Signup(){ 
 
     const {signup,isSigningup } = useAuthStore()
-
+    const navigate = useNavigate()
    
     const [visible,Setvisible] = useState(false)
     const userRef = useRef<HTMLInputElement>(null)
@@ -42,6 +42,7 @@ export  function  Signup(){
 
         if(success===true){
                 await signup(data)
+                navigate('/verifyemail')
         } ; 
     
   } ; 
@@ -57,12 +58,10 @@ export  function  Signup(){
                     Create Your Account
                 </h1> 
                 <span className="pt-1 text-gray-400 ">
-                    already have an account ? <a className="text-indigo-600 cursor-pointer"
-                    onClick={()=>{
-                        
-                    }}>
+                    already have an account ? <Link className="text-indigo-600 cursor-pointer"
+                  to={'/login'}  >
                         sign in 
-                    </a>
+                    </Link>
                 </span>
             </div>
         </div>
