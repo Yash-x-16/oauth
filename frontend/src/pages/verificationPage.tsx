@@ -1,29 +1,32 @@
 import { CheckCircle } from 'lucide-react';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 
-const VerificationPage = async () => { 
-const inputRef = useRef<HTMLInputElement>(null)
-const inputValue = inputRef.current?.value
-const {Verify } = useAuthStore()
-function validate(){
-    if(inputValue===""){
-        return toast.error("code can't be empty !!")
-    }
-    
-    return true
-}
+export const VerificationPage = async () => { 
+  const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { Verify } = useAuthStore();
 
-async function  submit(){
-    const sucess =validate()
+  async function submit(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    const inputValue = inputRef.current?.value;
 
-    if(sucess==true){
-     
-        await Verify(inputValue as string) 
-        
+    if (!inputValue || inputValue.trim() === "") {
+      return toast.error("Code can't be empty!!");
     }
-}
+
+    try {
+       await Verify(inputValue);
+      
+        toast.success("Email verified successfully!");
+        navigate('/profile'); 
+      
+    } catch (error) {
+      toast.error("Something went wrong.");
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -62,4 +65,3 @@ async function  submit(){
   );
 };
 
-export default VerificationPage;

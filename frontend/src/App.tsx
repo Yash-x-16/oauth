@@ -7,9 +7,9 @@ import { useEffect } from 'react'
 import {Loader} from "lucide-react"
 import { ProfilePage } from './pages/profilePage'
 import { Toaster } from 'react-hot-toast'
-import VerificationPage from './pages/verificationPage'
+import {VerificationPage} from './pages/verificationPage'
 function App() {
-  const {authUser,checkAuth,isCheckingAuth} = useAuthStore()
+  const {authUser,checkAuth,isCheckingAuth,isVerified} = useAuthStore()
 
   useEffect(()=>{
   checkAuth()
@@ -29,15 +29,11 @@ function App() {
                   <Routes>
                     <Route element={authUser?<ProfilePage/>:<Signup/>} path='/signup'/>
                     <Route element={authUser?<ProfilePage/>:<LoginPage/>} path='/login'/>
-                    <Route element={<VerificationPage/>} path='/verifyemail'/>
                     <Route element={authUser?<ProfilePage/>:<Navigate to={'/signin'}/>} path='/profile'/>
-                    <Route element={authUser?<ProfilePage/>:<VerificationPage/>} path='/verifyemail'/>
+                    <Route element={isVerified?<ProfilePage/>:<VerificationPage/>} path='/verifyemail'/>
                   </Routes>
                   <Toaster/>
-        </BrowserRouter>
-  
-
-
+        </BrowserRouter> 
 }
 
 export default App

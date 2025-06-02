@@ -9,6 +9,7 @@ interface AuthStore {
     isLogininup: boolean;
     checkAuth: () => Promise<void>;
     signup: (data: object) => Promise<void>;
+    login: (data: object) => Promise<void>;
     Verify:(code:string)=>Promise<void> ;
   }
   
@@ -49,17 +50,25 @@ export const useAuthStore = create<AuthStore>((set)=>({
 
     isVerified :null ,
 
-    Verify : async(code:string)=>{
+   Verify : async (code: string) => {
         try {
-        const code1 = JSON.parse(code)
-            set({isSigningup:true})
-            const response = await axiosInstance.post('/auth/verifyEmail',code1)
-            set({authUser:response.data,isVerified:true})
-            console.log(response)
-            toast.success("account verified succesfully !!",{duration:1500})
-        } catch (error) {
-            console.log("error in verify is ; ",error)
-            toast.error("invalid or expired code !!",{duration:1500})
+          const res = await fetch("http://localhost:3000/api/auth/verifyEmail", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json", 
+            },
+            body: JSON.stringify({ code }),
+          });
+          const data = await res.json();
+          return data.success;
+        } catch (err) {
+          console.error(err);
+          return false;
         }
-    }
+      },
+
+
+      login :async (data:Object)=>{
+
+      }
 }))

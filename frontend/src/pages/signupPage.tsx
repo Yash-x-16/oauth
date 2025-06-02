@@ -5,7 +5,7 @@ import { IoMdEyeOff } from "react-icons/io";
 import toast from 'react-hot-toast';
 import { BsChatDots } from "react-icons/bs";
 import { useAuthStore } from "../store/useAuthStore";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 export  function  Signup(){ 
 
     const {signup,isSigningup } = useAuthStore()
