@@ -10,10 +10,11 @@ import messageRoute from "./routes/message.route"
 
 
 const app = express() 
+
 app.use(cors({
-    origin:"http://www.localhost:5173", 
-    credentials:true
-}))
+    origin: 'http://localhost:5173', 
+    credentials: true 
+  }));
 dotenv.config()
 app.use(express.json()) 
 app.use(cookieParser())

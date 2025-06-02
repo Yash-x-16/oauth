@@ -38,7 +38,7 @@ export const signup = async (req :Request,res :Response)=>{
             password:hashedPassword ,
             name,
             verificationToken:verificationCode ,
-            verificationTokenExpiresAt:Date.now()+ 24*60*60*1000
+            verificationTokenExpiresAt: Date.now()+ 24*60*60*1000
         })
 
         await User.save()
@@ -51,6 +51,7 @@ export const signup = async (req :Request,res :Response)=>{
         }) 
        await getVerificationEmail(User.email,verificationCode)
     }catch(e){
+        console.log(e)
          res.status(400).json({success:false,message:e})
     }   
 }
