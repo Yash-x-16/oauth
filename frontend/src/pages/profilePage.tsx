@@ -1,14 +1,19 @@
 import { CiCamera,CiCalendar } from "react-icons/ci";
 import { FiShield } from "react-icons/fi";
 export  function ProfilePage(){
-    return <div className="bg-indigo-300 flex justify-center items-center h-screen w-screen flex-col">
-              <h1 className="inline-block">
+    return <div className="bg-gray-600 flex justify-center items-center h-screen w-screen flex-col">
+
+        <h1 className="flex flex-col text-black text-2xl  pr-56 pb-4 ">
                 Profile
-            </h1> 
-        <div className="flex bg-white h-auto w-96 text-black flex-col rounded-md">
+                <span className="text-sm text-gray-400">
+                    your profile Information
+                </span>
+            </h1>
+               
+        <div className="flex bg-white h-auto w-96 text-black flex-col rounded-lg shadow-2xl">
             <div className="flex items-center flex-col">
                  
-                        <div className="bg-[url('./download.jpg')]  h-24 w-24 rounded-full mt-4 mb-2">  </div> 
+                        <div className="bg-indigo-500  h-24 w-24 rounded-full mt-4 mb-2">  </div> 
                         <div className="absolute translate-x-10 translate-y-20 cursor-pointer bg-purple-500 rounded-full size-8 flex justify-center items-center">
                             <CiCamera className="size-6"/>
                             </div>

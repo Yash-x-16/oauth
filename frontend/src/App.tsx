@@ -8,6 +8,8 @@ import {Loader} from "lucide-react"
 import { ProfilePage } from './pages/profilePage'
 import { Toaster } from 'react-hot-toast'
 import {VerificationPage} from './pages/verificationPage'
+import { Message } from './pages/message'
+import { NameTemplate } from './components/nameTemaplate'
 function App() {
   const {authUser,checkAuth,isCheckingAuth,isVerified} = useAuthStore()
 
@@ -30,6 +32,8 @@ function App() {
                     <Route element={authUser?<ProfilePage/>:<Signup/>} path='/signup'/>
                     <Route element={authUser?<ProfilePage/>:<LoginPage/>} path='/login'/>
                     <Route element={<ProfilePage/>} path='/profile'/>
+                    <Route element={<Message/>} path='/message'/>
+                    <Route element={<NameTemplate/>} path='/t'/>
                     <Route element={isVerified?<ProfilePage/>:<VerificationPage/>} path='/verifyemail'/>
                   </Routes>
                   <Toaster/>
