@@ -29,7 +29,7 @@ function App() {
                   <Routes>
                     <Route element={authUser?<ProfilePage/>:<Signup/>} path='/signup'/>
                     <Route element={authUser?<ProfilePage/>:<LoginPage/>} path='/login'/>
-                    <Route element={authUser?<ProfilePage/>:<Navigate to={'/signin'}/>} path='/profile'/>
+                    <Route element={<ProfilePage/>} path='/profile'/>
                     <Route element={isVerified?<ProfilePage/>:<VerificationPage/>} path='/verifyemail'/>
                   </Routes>
                   <Toaster/>

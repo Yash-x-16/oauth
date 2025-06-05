@@ -1,6 +1,7 @@
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useRef, useState} from "react";
 import { IoMdEye } from "react-icons/io";
+import { FaUserPlus } from "react-icons/fa6";
 import { IoMdEyeOff } from "react-icons/io";
 import toast from 'react-hot-toast';
 import { BsChatDots } from "react-icons/bs";
@@ -133,9 +134,11 @@ export  function  Signup(){
                     <button className="btn btn-wide btn-primary mb-4"
                         onClick={submit}
                     >
+                       <FaUserPlus size={'18px'}/>
+                       <span className="pl-2">
                        {isSigningup?"nothing":"Create Account"}
-        
-                    <IoIosArrowRoundForward size={"30px"}/>
+                       </span>
+                       
                     </button>
                     </div>
             </div>
