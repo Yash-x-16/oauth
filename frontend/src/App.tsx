@@ -10,6 +10,9 @@ import { Toaster } from 'react-hot-toast'
 import {VerificationPage} from './pages/verificationPage'
 import { Message } from './pages/message'
 import { NameTemplate } from './components/nameTemaplate'
+import { SearchInput } from './components/searchInput'
+import { MessageTemplate } from './components/messageTeamplate'
+import { Sidebar } from './components/sidebar'
 function App() {
   const {authUser,checkAuth,isCheckingAuth,isVerified} = useAuthStore()
 
@@ -34,6 +37,9 @@ function App() {
                     <Route element={<ProfilePage/>} path='/profile'/>
                     <Route element={<Message/>} path='/message'/>
                     <Route element={<NameTemplate/>} path='/t'/>
+                    <Route element={<SearchInput/>} path='/i'/>
+                    <Route element={<MessageTemplate/>} path='/m'/>
+                    <Route element={<Sidebar/>} path='/sidebar'/>
                     <Route element={isVerified?<ProfilePage/>:<VerificationPage/>} path='/verifyemail'/>
                   </Routes>
                   <Toaster/>
