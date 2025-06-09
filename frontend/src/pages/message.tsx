@@ -1,3 +1,4 @@
+import { Chatview } from "../components/chatview/chatview";
 import { DefaultSidebar } from "../components/defaultMessage";
 import { Sidebar } from "../components/sidebar"
 import { IoIosSend } from "react-icons/io";
@@ -6,6 +7,6 @@ export function Message(){
         <div >
             <Sidebar/>
         </div>
-      <DefaultSidebar/>
+      <Chatview/>
     </div>
 }
