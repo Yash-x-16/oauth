@@ -1,7 +1,7 @@
 import { CiSettings } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 export function NameTemplate(){
-    return <div className="flex justify-center items-center mt-3">
+    return <div className="flex justify-center items-center mt-3 ">
         <div className="size-10 bg-indigo-400 rounded-full ">
         </div>
         <div className="pl-4 leading-4">
