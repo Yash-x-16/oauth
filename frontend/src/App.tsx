@@ -13,6 +13,7 @@ import { NameTemplate } from './components/nameTemaplate'
 import { SearchInput } from './components/searchInput'
 import { MessageTemplate } from './components/messageTeamplate'
 import { Sidebar } from './components/sidebar'
+import { useThemeStore } from './store/useThemeStore'
 function App() {
   const {authUser,checkAuth,isCheckingAuth,isVerified} = useAuthStore()
 
@@ -30,7 +31,9 @@ function App() {
     )
   }
   
-  return <BrowserRouter>
+  return <div data-theme="retro">
+   
+   <BrowserRouter>
                   <Routes>
                     <Route element={authUser?<ProfilePage/>:<Signup/>} path='/signup'/>
                     <Route element={authUser?<ProfilePage/>:<LoginPage/>} path='/login'/>
@@ -44,6 +47,8 @@ function App() {
                   </Routes>
                   <Toaster/>
         </BrowserRouter> 
+         
+  </div>
 }
 
 export default App

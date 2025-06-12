@@ -1,4 +1,5 @@
 import { CiSettings } from "react-icons/ci";
+import { FaRegUser } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 export function NameTemplate(){
     return <div className="flex justify-center items-center mt-3 ">
@@ -11,6 +12,10 @@ export function NameTemplate(){
             <span className="text-xs">
                 xyz@gmail.com
             </span>
+        </div>
+
+        <div className="bg-red-400 flex justify-center items-center rounded-full size-7 ml-4">
+            <FaRegUser size={'20px'} className="cursor-pointer "/>
         </div>
 
         <div className="bg-red-400 flex justify-center items-center rounded-full size-7 ml-4">

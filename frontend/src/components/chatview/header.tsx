@@ -1,6 +1,7 @@
 import { IoIosCall } from "react-icons/io";
 import { FaVideo } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import toast from "react-hot-toast";
 export function Header(){
     return <div className="flex justify-between m-4   rounded"> 
     <div className="flex">
@@ -18,10 +19,14 @@ export function Header(){
     </div>
         <div className="flex  mt-2  items-center  h-auto w-auto">
             <div className="mr-5 cursor-pointer" >
-            <IoIosCall size={'25px'}/>
+            <IoIosCall size={'25px'} onClick={()=>{
+                return toast.error("coming soon",{duration:1500})
+            }}/>
             </div>
             <div className="mr-4 cursor-pointer">
-            <FaVideo size={'25px'}/>
+            <FaVideo size={'25px'} onClick={()=>{
+                return toast.error("coming soon",{duration:1500})
+            }} />
             </div>
             <div className="cursor-pointer">
             <BsThreeDotsVertical size={'25px'}/>
