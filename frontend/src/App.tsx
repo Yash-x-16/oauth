@@ -1,4 +1,4 @@
-import { BrowserRouter,Routes,Route, Navigate } from 'react-router-dom'
+import { BrowserRouter,Routes,Route, } from 'react-router-dom'
 import './App.css'
 import { Signup } from './pages/signupPage'
 import { LoginPage } from './pages/loginPage'
@@ -14,6 +14,7 @@ import { SearchInput } from './components/searchInput'
 import { MessageTemplate } from './components/messageTeamplate'
 import { Sidebar } from './components/sidebar'
 import { useThemeStore } from './store/useThemeStore'
+import { ThemePage } from './pages/themePage'
 function App() {
   const {authUser,checkAuth,isCheckingAuth,isVerified} = useAuthStore()
 
@@ -30,8 +31,8 @@ function App() {
       </div>
     )
   }
-  
-  return <div data-theme="retro">
+  const {theme} = useThemeStore()
+  return <div data-theme={theme}>
    
    <BrowserRouter>
                   <Routes>
@@ -43,6 +44,7 @@ function App() {
                     <Route element={<SearchInput/>} path='/i'/>
                     <Route element={<MessageTemplate/>} path='/m'/>
                     <Route element={<Sidebar/>} path='/sidebar'/>
+                    <Route element={<ThemePage/>} path='/theme'/>
                     <Route element={isVerified?<ProfilePage/>:<VerificationPage/>} path='/verifyemail'/>
                   </Routes>
                   <Toaster/>
