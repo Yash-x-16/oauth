@@ -36,7 +36,7 @@ function App() {
    
    <BrowserRouter>
                   <Routes>
-                    <Route element={authUser?<ProfilePage/>:<Signup/>} path='/signup'/>
+                    <Route element={authUser?<ProfilePage/>:<Signup/>} path='/'/>
                     <Route element={authUser?<ProfilePage/>:<LoginPage/>} path='/login'/>
                     <Route element={<ProfilePage/>} path='/profile'/>
                     <Route element={<Message/>} path='/message'/>
