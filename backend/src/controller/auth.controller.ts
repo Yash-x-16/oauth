@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
 import crypto from "crypto"
 import bcrypt from "bcrypt"
-import { getVerificationCode } from "../utils/getverificationcode";
 import { Token } from "../utils/generateToken";
-import mongoose, { ObjectId } from "mongoose";
-import { getVerificationEmail ,getPasswordResetEmail} from "../mailtrap/emails";
+import mongoose from "mongoose";
 import { user } from "../models/user.model";
 import cloudinary from "../utils/cludinary.config";
 
@@ -30,15 +28,13 @@ export const signup = async (req :Request,res :Response)=>{
         }
 
         const hashedPassword = await bcrypt.hash(password,5)
-        const verificationCode = parseInt(getVerificationCode())
+       
 
 
         const User = new user({
             email,
             password:hashedPassword ,
             name,
-            verificationToken:verificationCode ,
-            verificationTokenExpiresAt: Date.now()+ 24*60*60*1000
         })
 
         await User.save()
@@ -49,7 +45,7 @@ export const signup = async (req :Request,res :Response)=>{
             user:{...User,
             password:null}
         }) 
-       await getVerificationEmail(User.email,verificationCode)
+      
     }catch(e){
         console.log(e)
          res.status(400).json({success:false,message:e})
@@ -57,32 +53,6 @@ export const signup = async (req :Request,res :Response)=>{
 }
 
 
-export const verifyEmail=async (req:Request,res:Response)=>{
-    const {code }= req.body
-    try{
-       const User= await user.findOne({
-            verificationToken:code,
-            verificationTokenExpiresAt:{$gt:Date.now()}
-        })
-
-        if(!User){
-            res.send({
-                message:"no user found !"
-            })
-        }
-        if (User) {
-            User.isVerified = true;
-            User.verificationToken = undefined;
-            User.verificationTokenExpiresAt = undefined;
-          }
-        await User?.save()
-        res.json({
-            message:"verification succesfull !!"
-        })
-    }catch(e){
-        console.log(e)
-    }
-}
 
 
 export const signin = async (req :Request,res :Response)=>{
@@ -128,40 +98,6 @@ export const signin = async (req :Request,res :Response)=>{
 }
 
 
-export const forgotPassword = async(req :Request,res :Response)=>{
-    const {email} = req.body ; 
-    
-    try{
-        const User = await user.findOne({
-            email
-        })
-
-        if(!user){
-            res.status(401).send({success:false,message:"user not found"})
-        }
-
-        if(User){
-            const resetToken = crypto.randomBytes(20).toString("hex")
-            const resetTokenExpiresAt = new Date(Date.now() + 1 * 60 * 60* 1000) ; 
-            User.resetPasswordToken =resetToken ; 
-            User.resetPasswordTokenExpiresAt = resetTokenExpiresAt
-
-            await User.save() 
-           await getPasswordResetEmail(User.email,`${process.env.LINK}/resetPassword/${resetToken}`)
-           res.status(201).send({
-            sucess :true ,
-            message:"reset link is sent to the registered email"
-           })
-
-        }
-    }catch(e){
-        res.json({
-            suceess:false ,
-            message:e
-        })
-    }
-}
-
 
 export const signout = async (req :Request,res :Response)=>{
 
@@ -174,38 +110,6 @@ res.send({
 
 }
 
-
-export const resetPassword =async (req :Request,res :Response)=>{
-    try{
-        const {token} = req.params ;
-        const {password} = req.body ; 
-        const User = await user.findOne({
-            resetPasswordToken:token,
-            resetPasswordTokenExpiresAt:{$gt:Date.now()}
-        })
-
-        if(!User){
-            res.status(401).send({success:false,message:"user not found"})
-        }
-
-        if(User){
-            const hashedPassword = await bcrypt.hash(password,10)
-            User.password = hashedPassword ;
-            User.resetPasswordToken=undefined ;
-            User.resetPasswordTokenExpiresAt = undefined 
-            await User.save()
-            res.status(201).send({
-                sucess:true,
-                message:"password reset suceesful !!"
-            })
-        }
-    }catch(e){
-        res.send({
-            sucess :false , 
-            message:e
-        })
-    }
-} 
 
 
 export const checkAuth = async (req :Request,res :Response)=>{

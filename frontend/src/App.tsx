@@ -36,8 +36,8 @@ function App() {
    
    <BrowserRouter>
                   <Routes>
-                    <Route element={authUser?<ProfilePage/>:<Signup/>} path='/'/>
-                    <Route element={authUser?<ProfilePage/>:<LoginPage/>} path='/login'/>
+                    <Route element={<Signup/>} path='/'/>
+                    <Route element={<LoginPage/>} path='/login'/>
                     <Route element={<ProfilePage/>} path='/profile'/>
                     <Route element={<Message/>} path='/message'/>
                     <Route element={<NameTemplate/>} path='/t'/>

@@ -1,14 +1,12 @@
 import express from "express"
 import dotenv from "dotenv"
+
 import { 
       checkAuth, 
-      forgotPassword,
-      resetPassword,
       signin,
       signout,
       signup,
       updateProfile,
-      verifyEmail
      } from "../controller/auth.controller"
 
 import { verifyToken } from "../middleware/verifytoken"
@@ -27,10 +25,7 @@ router.post('/signin',signin)
 
 router.post('/signout',signout)
 
-router.post('/verifyEmail',verifyEmail)
 
-router.post('/forgotPassword',forgotPassword)
-router.post('/resetPassword:token',resetPassword)
 
 router.post('/updateProfile',verifyToken,updateProfile)
 
