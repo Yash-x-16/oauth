@@ -5,8 +5,8 @@ import { IoMdEyeOff } from "react-icons/io";
 import toast from 'react-hot-toast';
 import { BsChatDots } from "react-icons/bs";
 import { useAuthStore } from "../store/useAuthStore";
-import { Link,  useNavigate } from "react-router-dom";
-import { LogIn } from "lucide-react";
+import { Link,   } from "react-router-dom";
+
 export  function LoginPage(){
 const {login}=  useAuthStore()
 const { isLogininup} = useAuthStore()
@@ -31,6 +31,7 @@ async function submit (){
     const  success = validate()
     if (success === true ){
         await login(data)
+        toast.success("logged in ",{duration:1500})
     }
 } 
 
@@ -46,7 +47,7 @@ return <div className=" flex items-center justify-center bg-gray-100 h-screen w-
             </h1> 
             <span className="pt-1 text-gray-400 ">
                 Or   <Link className="text-indigo-600 cursor-pointer"
-              to={'/signup'}  >
+              to={'/'}  >
                     Create a Free Account here 
                 </Link>
             </span>
@@ -92,7 +93,7 @@ return <div className=" flex items-center justify-center bg-gray-100 h-screen w-
 
                 <div className="m-2 flex justify-center items-center">
                 <button className="btn btn-wide btn-primary mb-4"
-                    // onClick={submit}
+                    onClick={submit}
                 >
                    {isLogininup?"nothing":"Log in"}
     

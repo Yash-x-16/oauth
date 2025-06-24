@@ -16,11 +16,11 @@ import { Sidebar } from './components/sidebar'
 import { useThemeStore } from './store/useThemeStore'
 import { ThemePage } from './pages/themePage'
 function App() {
-  const {authUser,checkAuth,isCheckingAuth,isVerified} = useAuthStore()
+   const {authUser,isCheckingAuth,isVerified} = useAuthStore()
 
-  useEffect(()=>{
-  checkAuth()
-  },[checkAuth])
+  // useEffect(()=>{
+  // checkAuth()
+  // },[checkAuth])
   
   // console.log(authUser)
 

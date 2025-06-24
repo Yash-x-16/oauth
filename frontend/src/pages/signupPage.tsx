@@ -34,7 +34,7 @@ export  function  Signup(){
         if (!password) return toast.error("Password can't be empty",{duration:2000});
         if (password.length < 6) return toast.error("Password must be at least 6 characters",{duration:2000});
         if (!email?.includes('@')) return toast.error("Invalid email",{duration:2000});
-        if(checkRef==false){return toast.error("agree terms and consition to continue")}
+        if(checkRef==false){return toast.error("agree terms and condition to continue")}
         return true
                       }
 
@@ -43,7 +43,8 @@ export  function  Signup(){
 
         if(success===true){
                 await signup(data)
-                navigate('/verifyemail')
+                toast.success('account created succesfully !!',{duration:1500})
+                navigate('/message')
         } ; 
     
   } ; 

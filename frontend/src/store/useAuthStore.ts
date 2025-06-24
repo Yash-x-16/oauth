@@ -8,9 +8,9 @@ interface AuthStore {
     isSigningup: boolean;
     isLogininup: boolean;
     checkAuth: () => Promise<void>;
-    signup: (data: object) => Promise<void>;
-    login: (data: object) => Promise<void>;
-    Verify:(code:string)=>Promise<void> ;
+    signup: (data: object) => Promise<string | undefined>;
+    login: (data: object) =>Promise<string | undefined>;
+ 
   }
   
 
@@ -39,36 +39,31 @@ export const useAuthStore = create<AuthStore>((set)=>({
         try {
             const res = await axiosInstance.post('/auth/signup',data)
             set({authUser:res.data})
-            toast.success("account created succesfully !",{duration:1500})
+          return toast.success("account created succesfully !",{duration:1500})
         } catch (error) {
             console.log(error)
-            toast.error("error in signup")
+           return toast.error(`${error}`)
         }finally{
             set({isSigningup:false})
         }
     },
 
     isVerified :null ,
-
-   Verify : async (code: string) => {
-        try {
-          const res = await fetch("http://localhost:3000/api/auth/verifyEmail", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json", 
-            },
-            body: JSON.stringify({ code }),
-          });
-          const data = await res.json();
-          return data.success;
-        } catch (err) {
-          console.error(err);
-          return false;
-        }
-      },
-
-
       login :async (data:Object)=>{
         
+        set({isLogininup:true})
+        
+        
+        try{
+          
+          const res = await axiosInstance.post('/auth/signin',data)
+          localStorage.setItem("token" ,res.data.token)
+          return toast.success("logged in !!",{duration:1500})
+        }
+        catch(error){
+          return toast.error(`${error}`)
+        }finally{
+          set({isLogininup:false})
+        }
       }
 }))
